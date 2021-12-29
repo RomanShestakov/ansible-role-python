@@ -56,6 +56,13 @@
     chdir: "/tmp/Python-{{ python_version }}"
   when: command_result.rc > 0
 
+- name: Linux | Add Python3 to the PATH
+  become: true
+  action: template src=python3.sh-template.j2
+          dest="/etc/profile.d/python3.sh"
+          mode=0644
+  when: command_result.rc > 0
+
 - name: Linux | Clean dependency use for python compilation
   package:
     name: "{{ item }}"
